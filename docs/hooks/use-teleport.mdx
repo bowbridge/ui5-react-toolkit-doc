@@ -7,3 +7,253 @@ sidebar_position: 1
 This hook provides a way to render children outside the DOM hierarchy of the parent component using React Portals.
 
 As recommended by the UI5 Web Component for React Library team, this hook helps to mount the Modals and Popovers in an easy way.
+
+Live example [here](https://ui5-webcomponents-react-examples.vercel.app/teleport)
+
+### Api
+
+This hook returns an Object with the following values
+
+**isOpen** - boolean value gives the state of the visibility.
+
+**Teleport** - React Component to wrap the Children.
+
+**close** - Close Handler. It removes the Element from the DOM.
+
+:::warning
+Do not forget to call this close function to avoid unexpected behavior.
+:::
+
+:::info
+**Popover Based Components [ActionSheet, Popover, ResponsivePopover] **
+:::
+
+**popoverRef** - Ref Object _Ui5PopoverDomRef_
+
+**openPopover** - This Opener Function expects _HTMLElement | EventTarget_
+
+:::info
+** Dialog Based Components [Dialog, MessageBox] **
+:::
+
+**dialogRef** - Ref Object _Ui5DialogDomRef_
+
+**openDialog** - Dialog Opener Function
+
+### ActionSheet
+
+```jsx
+import React from "react"
+import { useTeleport } from "@bowbridge/ui5-react-toolkit"
+import {
+  ActionSheet,
+  Button,
+  PopoverPlacementType,
+} from "@ui5/webcomponents-react"
+import { spacing } from "@ui5/webcomponents-react-base"
+
+export const ActionSheetExample = () => {
+  const { isOpen, openPopover, popoverRef, Teleport, close } = useTeleport()
+  return (
+    <>
+      <Button
+        style={{ ...spacing.sapUiLargeMarginTopBottom }}
+        onClick={(e) => openPopover(e.target)}
+      >
+        Open ActionSheet
+      </Button>
+
+      {isOpen && (
+        <Teleport>
+          <ActionSheet
+            ref={popoverRef}
+            onAfterClose={close}
+            placementType={PopoverPlacementType.Right}
+          >
+            <Button icon='add'>Accept</Button>
+            <Button>Reject</Button>
+            <Button>This is my super long text!</Button>
+          </ActionSheet>
+        </Teleport>
+      )}
+    </>
+  )
+}
+```
+
+### Dialog
+
+```jsx
+import React from "react"
+import { useTeleport } from "@bowbridge/ui5-react-toolkit"
+import { Dialog, Button } from "@ui5/webcomponents-react"
+import { spacing } from "@ui5/webcomponents-react-base"
+
+export const DialogExample = () => {
+  const { isOpen, openDialog, dialogRef, Teleport, close } = useTeleport()
+  return (
+    <>
+      <Button
+        style={{ ...spacing.sapUiLargeMarginTopBottom }}
+        onClick={openDialog}
+      >
+        Open Dialog
+      </Button>
+
+      {isOpen && (
+        <Teleport>
+          <Dialog ref={dialogRef} onAfterClose={close}>
+            Press "Escape to close the Dialog"
+          </Dialog>
+        </Teleport>
+      )}
+    </>
+  )
+}
+```
+
+### MessageBox
+
+```jsx
+import React from "react"
+import { useTeleport } from "@bowbridge/ui5-react-toolkit"
+import { MessageBox, Button } from "@ui5/webcomponents-react"
+import { spacing } from "@ui5/webcomponents-react-base"
+
+type MessageBoxCloseEvent = CustomEvent<{
+  action: string,
+}>
+
+export const MessageBoxExample = () => {
+  const { isOpen, openDialog, dialogRef, Teleport, close } = useTeleport()
+
+  const closeHandler = (e: MessageBoxCloseEvent) => {
+    console.log(e.detail.action)
+    close()
+  }
+
+  return (
+    <>
+      <Button
+        style={{ ...spacing.sapUiLargeMarginTopBottom }}
+        onClick={openDialog}
+      >
+        Open MessageBox
+      </Button>
+
+      {isOpen && (
+        <Teleport>
+          <MessageBox
+            ref={dialogRef}
+            open={isOpen}
+            onClose={(e) => closeHandler(e)}
+          >
+            Press "Escape" to close the MessageBox.
+          </MessageBox>
+        </Teleport>
+      )}
+    </>
+  )
+}
+```
+
+:::tip
+The following example shows multiple usages of useTeleport Hook in a single Component.
+:::
+
+### Popover
+
+```jsx
+import { useTeleport } from "@bowbridge/ui5-react-toolkit"
+import {
+  Popover,
+  Button,
+  PopoverPlacementType,
+  Label,
+  ResponsivePopover,
+  List,
+  StandardListItem,
+  Icon,
+  Title,
+  Bar,
+} from "@ui5/webcomponents-react"
+import { spacing } from "@ui5/webcomponents-react-base"
+import React from "react"
+
+export const PopoverHook = () => {
+  const { isOpen, openPopover, popoverRef, Teleport, close } = useTeleport()
+  const HandleResponsivePopover = useTeleport()
+  return (
+    <>
+        <Button
+          style={{ ...spacing.sapUiLargeMarginTopBottom }}
+          onClick={(e) => openPopover(e.target)}
+        >
+          Open Popover
+        </Button>
+
+        {isOpen && (
+          <Teleport>
+            <Popover
+              headerText='Popover Header'
+              ref={popoverRef}
+              onAfterClose={close}
+              placementType={PopoverPlacementType.Left}
+            >
+              <Label>
+                Press "Escape" or click outside to close the Popover
+              </Label>
+            </Popover>
+          </Teleport>
+        )}
+      </div>
+      <div style={{}}>
+        <Button
+          style={{ ...spacing.sapUiLargeMarginTopBottom }}
+          onClick={(e) => HandleResponsivePopover.openPopover(e.target)}
+        >
+          Open ResponsivePopover
+        </Button>
+        {HandleResponsivePopover.isOpen && (
+          <HandleResponsivePopover.Teleport>
+            <ResponsivePopover
+              footer={
+                <Bar
+                  endContent={
+                    <Button onClick={HandleResponsivePopover.close}>
+                      Close
+                    </Button>
+                  }
+                />
+              }
+              header={
+                <Bar endContent={<Icon name='settings' />}>
+                  <Title>Popover</Title>
+                </Bar>
+              }
+              headerText='ResponsivePopover Header'
+              ref={HandleResponsivePopover.popoverRef}
+              onAfterClose={HandleResponsivePopover.close}
+            >
+              <List
+                style={{
+                  width: "200px",
+                }}
+              >
+                <StandardListItem additionalText='3'>
+                  List Item 1
+                </StandardListItem>
+                <StandardListItem additionalText='2'>
+                  List Item 2
+                </StandardListItem>
+                <StandardListItem additionalText='1'>
+                  List Item 3
+                </StandardListItem>
+              </List>
+            </ResponsivePopover>
+          </HandleResponsivePopover.Teleport>
+        )}
+    </>
+  )
+}
+```

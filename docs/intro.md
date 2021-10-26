@@ -30,7 +30,7 @@ npm i yup react-hook-form @hookform/resolvers
 
 ### Starter Template
 
-Get started [**with typescript**Template](https://github.com/bowbridge/ui5-react-typescript).
+Get started a new project [**with typescript**](https://github.com/bowbridge/ui5-react-typescript) Template.
 
 ### Live Demo
 
