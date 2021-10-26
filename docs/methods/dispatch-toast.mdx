@@ -1,0 +1,25 @@
+---
+sidebar_position: 1
+---
+
+# dispatchToast
+
+This method renders the Toast Component Programmatically
+
+**Type Declaration**
+
+```jsx
+type ToastDisplayType = 'INFO' | 'SUCCESS' | 'WARNING' | 'ERROR'
+
+dispatchToast: (message: string, type?: ToastDisplayType, duration?: number | undefined, placement?: ToastPlacement) => void;
+
+```
+
+```jsx
+import { ToastPlacement } from "@ui5/webcomponents-react"
+import { dispatchToast } from "@bowbridge/ui5-react-toolkit"
+
+dispatchToast("User Created", "SUCCESS", 5000, ToastPlacement.BottomCenter)
+or
+dispatchToast("Test Message") // Default ToastDisplayType is INFO
+```
