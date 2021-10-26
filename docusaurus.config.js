@@ -89,7 +89,7 @@ const config = {
             ],
           },
           {
-            title: "Bowbridge",
+            title: "bowbridge",
             items: [
               {
                 label: "Website",
@@ -107,7 +107,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Bowbridge Software GmbH. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} bowbridge Software GmbH. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
