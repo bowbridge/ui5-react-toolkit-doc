@@ -80,7 +80,7 @@ const config = {
               },
               {
                 label: "UI5-React-Toolkit-Examples",
-                href: "https://ui5-webcomponents-react-examples.vercel.app/dashboard",
+                href: "https://ui5-react-examples.bowbridge.net/",
               },
               {
                 label: "UI5-React-Typescript-Starter",
@@ -93,7 +93,7 @@ const config = {
             items: [
               {
                 label: "Website",
-                href: "https://bowbridge.net/",
+                href: "https://www.bowbridge.net/",
               },
               {
                 label: "Github",
