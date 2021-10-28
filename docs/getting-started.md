@@ -34,4 +34,4 @@ Get started a new project [**with typescript**](https://github.com/bowbridge/ui5
 
 ### Live Demo
 
-UI5-React-Examples [**here**](https://ui5-webcomponents-react-examples.vercel.app/).
+UI5-React-Examples [**here**](https://ui5-react-examples.bowbridge.net/).

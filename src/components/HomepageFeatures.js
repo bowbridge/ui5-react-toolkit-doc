@@ -12,7 +12,7 @@ const FeatureList = [
         listed
         <a
           style={{ marginLeft: "0.5rem" }}
-          href='https://ui5-webcomponents-react-examples.vercel.app/dashboard'
+          href='https://ui5-react-examples.bowbridge.net/'
           target='_blank'
         >
           here
